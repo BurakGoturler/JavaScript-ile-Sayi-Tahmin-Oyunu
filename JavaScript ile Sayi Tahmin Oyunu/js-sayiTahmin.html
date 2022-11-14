@@ -1,0 +1,128 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Sayı Tahmin Oyunu</title>
+
+  <style>
+    * {
+      margin: 10px;
+      position: relative;
+      left: 100px;
+    }
+
+    span {
+      left: 0px !important;
+    }
+
+    #txtMetin {
+      width: 200px;
+    }
+
+    #btnEkle {
+      width: 50px;
+      height: 30px;
+      background-color: aqua;
+      color: orange;
+    }
+
+    div {
+      border: solid 2px gray;
+      background-color: wheat;
+      color: blue;
+      font-size: 14px;
+      width: 300px;
+      min-height: 200px;
+    }
+
+    .kirmizi {
+      border: 2px solid red;
+    }
+
+    .pink {
+      border: 2px solid pink;
+    }
+
+    #divSonuc {
+      color: green !important;
+      font-weight: bold !important;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <input type="text" id="txtSayi" placeholder="Bir sayı tahmin ediniz." />
+
+  <button id="btnTahmin" onclick="TahminEtClick()"> Tahmin Et </button>
+
+  <div id="divLog"></div>
+  <div id="divSonuc"></div>
+
+  <script>
+
+    var tutulanSayi = Math.floor(Math.random() * 100 + 1);
+    var tahminAdedi = 0;
+    var tahminEdilenSayilar = [];
+
+    function SayiKontrol(sayi) {
+      if (tahminEdilenSayilar.length == 0) {
+        tahminEdilenSayilar.push(sayi);
+        return false;
+      }
+
+      if (tahminEdilenSayilar.indexOf(sayi) == -1) {
+        tahminEdilenSayilar.push(sayi);
+        return false;
+      }
+      return true;
+    }
+
+    function TahminEtClick() {
+
+      var textEleman = document.getElementById("txtSayi");
+      var divLog = document.getElementById("divLog");
+      var divSonuc = document.getElementById("divSonuc");
+      var girilenSayi = Number(textEleman.value); //girilen değişkeni sayıya çevir.
+
+      if (girilenSayi > 100 || girilenSayi < 0) {
+        divLog.innerHTML += "<span style =  'color: red !important;'> Lütfen 0 ile 100 arasında bir sayı tahmin ediniz.</span>";
+        divLog.innerHTML += "<br>";
+        textEleman.classList.add("kirmizi");
+        textEleman.classList
+        return;
+      }
+
+      textEleman.classList.remove("kirmizi");
+      textEleman.value = "";
+      if (SayiKontrol(girilenSayi)) {
+        divLog.innerHTML += "Bu sayıyı daha önce tahmin etmiştiniz. Lütfen farklı bir sayı tahmin ediniz.";
+        divLog.innerHTML += "<br>";
+        return;
+      }
+
+      tahminAdedi++;
+
+      if (tutulanSayi == girilenSayi) {
+        divSonuc.innerText = "Tebrikler bildiniz. Tahmin sayısı: " + tahminAdedi;
+        textEleman.classList.add("pink");
+        return;
+      }
+      if (
+        girilenSayi < tutulanSayi) {
+        divLog.innerHTML += "Tahmin Ettiğiniz Sayı: " + girilenSayi + "" + " Lütfen daha büyük bir sayı yazınız.";
+        divLog.innerHTML += "<br>";
+      }
+      else {
+        divLog.innerHTML += "Tahmin Ettiğiniz Sayı: " + girilenSayi + "" + " Lütfen daha küçük bir sayı yazınız.";
+        divLog.innerHTML += "<br>";
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
